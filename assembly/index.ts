@@ -1,17 +1,24 @@
-@external("env", "ws_log")
-declare function ws_log(ptr: string, size: u32): void
-
-@external("env", "ws_set_db")
-declare function ws_set_db(key: string, key_size: u32, v: i32): void
-
-@external("env", "ws_get_db")
-declare function ws_get_db(key: string, key_size: u32): i32
+import { GetDataByRID, GetDB, Log, SendTx, SetDB } from "./sdk";
 
 export function start(rid: i32): i32 {
-    const message = "Hello";
-    ws_log(message, message.length);
-    ws_set_db("key", 3, 1)
-    const key = ws_get_db('key', 3);
-    ws_log("key", 3)
-    return 0
+  Log("start");
+  //   const message = GetDataByRID(rid);
+  //   Log("wasm received message:" + message);
+  SendTx(`
+{
+    "to": "0xb73eE6EB5b1984c78CCcC49eA7Ad773E71d74F51",
+    "value": "0",
+    "data": "40c10f190000000000000000000000009117f5EF4156709092f79740a97b1638cA399A000000000000000000000000000000000000000000000000000de0b6b3a7640000"
+}`);
+  //   SetDB("key001", 1);
+  //   let value = GetDB("key001");
+  //   Log("wasm get value:" + value.toString());
+  return 0;
 }
+
+function abort(
+  message: string | null,
+  fileName: string | null,
+  lineNumber: u32,
+  columnNumber: u32
+): void {}
