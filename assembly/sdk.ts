@@ -48,8 +48,15 @@ export function GetDB(key: string):i32 {
 }
 
 export function GetDataByRID(rid: i32): string {
-    let data_ptr = changetype<usize>(0);
-    let size_ptr = changetype<usize>(0);
+    let data = String.UTF8.encode("0", true);
+    let data_ptr = changetype<usize>(data);
+    let data_size = data.byteLength - 1;
+    
+    let size = String.UTF8.encode("0", true);
+    let size_ptr = changetype<usize>(size);
+    let size_size = size.byteLength - 1;
+    ws_get_data(rid, data_ptr, data_size);
+    
     //todo fix bug
     Log("GetDataByRID" +rid.toString());
     let code = ws_get_data(rid, u32(data_ptr) , u32(size_ptr));
