@@ -2,13 +2,13 @@
 declare function ws_log(logLevel:u8, ptr: usize, size: usize): i32
 
 @external("env", "ws_set_db")
-declare function ws_set_db(key_ptr:usize,ket_size:i32,return_ptr:usize,return_size:i32): i32
+declare function ws_set_db(key_ptr:usize,ket_size:i32,return_ptr: usize,return_size:i32): i32
 
 @external("env", "ws_get_db")
 declare function ws_get_db(addr:usize,size:usize,rAddr:usize,rSize:u32): i32
 
 @external("env", "ws_get_data")
-declare function ws_get_data(rid: i32, ptr: u32 , size:u32): i32
+declare function ws_get_data(rid: i32, data_ptr: usize , size_ptr:usize): i32
 
 @external("env", "ws_set_data")
 declare function ws_set_data(rid: i32, ptr: usize , size:u32): i32
@@ -35,39 +35,42 @@ export function SetDB(key: string, value: i32):i32 {
     return 0;
 }
 
-export function GetDB(key: string):i32 {
+export function GetDB(key: string):string {
+    //key to ptr
     let keyEncoded = String.UTF8.encode(key, true);
     let key_ptr = changetype<usize>(keyEncoded);
     let key_size = keyEncoded.byteLength - 1;
 
-    let valueEncoded = String.UTF8.encode("0", true);
-    let value_ptr = changetype<usize>(valueEncoded);
-    let value_size = valueEncoded.byteLength - 1;
-    //todo fix bug
-    return ws_get_db(key_ptr, key_size, value_ptr, value_size);
+    let rAddr = heap.alloc(sizeof<u32>());
+    let rSize = heap.alloc(sizeof<u32>());
+
+    let code = ws_get_db(key_ptr, key_size, rAddr, rSize);
+    if(code != 0){
+        return "";
+    }
+    let rAddrValue = load<u32>(rAddr);
+    let rAddrSize = load<u32>(rSize);
+    let data = String.UTF8.decodeUnsafe(rAddrValue, rAddrSize, true);
+    heap.free(rAddr);
+    heap.free(rSize);
+    return data;
 }
 
 export function GetDataByRID(rid: i32): string {
-    let data = String.UTF8.encode("0", true);
-    let data_ptr = changetype<usize>(data);
-    let data_size = data.byteLength - 1;
-    
-    let size = String.UTF8.encode("0", true);
-    let size_ptr = changetype<usize>(size);
-    let size_size = size.byteLength - 1;
-    ws_get_data(rid, data_ptr, data_size);
-    
-    //todo fix bug
-    Log("GetDataByRID" +rid.toString());
-    let code = ws_get_data(rid, u32(data_ptr) , u32(size_ptr));
-    Log("code:" + code.toString());
-    return code.toString()
-    // if(code == 0){
-    //     const dataBuffer = new ArrayBuffer(size_size);
-    //     memory.copy(data_ptr, changetype<usize>(dataBuffer), size_size);
-    //     return String.UTF8.decode(dataBuffer, true);
-    // }
-    // return "";
+    let memory_ptr = heap.alloc(sizeof<u32>());
+    let size_ptr = heap.alloc(sizeof<u32>());
+    //todo fix bugmemory_ptr
+    let code = ws_get_data(rid, memory_ptr , size_ptr);
+    if(code == 0){
+        let data_ptr = load<u32>(memory_ptr);
+        let data_size = load<u32>(size_ptr);
+        let data = String.UTF8.decodeUnsafe(data_ptr, data_size, true);
+        //gc
+        heap.free(data_ptr);
+        heap.free(size_ptr);
+        return data;
+    }
+    return "";
 }
 
 export function SendTx(tx: string):i32 {
@@ -76,3 +79,4 @@ export function SendTx(tx: string):i32 {
     let tx_size = txEncoded.byteLength - 1;
     return ws_send_tx(tx_ptr, tx_size);
 }
+
