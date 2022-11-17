@@ -1,7 +1,7 @@
 import { GetDataByRID, GetDB, Log, SendTx, SetDB } from "./sdk";
 
 export function start(rid: i32): i32 {
-  Log("start from typescript");
+  Log("start from typescript4");
   const message = GetDataByRID(rid);
   let word = message.split("");
   SetDB("wordCount", word.length);

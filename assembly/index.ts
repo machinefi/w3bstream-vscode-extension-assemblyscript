@@ -3,7 +3,7 @@ import { JSON } from "../node_modules/assemblyscript-json/assembly/index";
 //https://www.npmjs.com/package/assemblyscript-json
 
 export function start(rid: i32): i32 {
-  Log("start from typescript");
+  Log("start from typescript7");
   const message = GetDataByRID(rid);
   Log("wasm received message:" + message);
   let jsonObj: JSON.Obj = <JSON.Obj>JSON.parse(message);
