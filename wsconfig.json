@@ -1,0 +1,14 @@
+{
+  "language": {
+    "lang": "typescript"
+  },
+  "compile:options": {
+    "input": "./assembly/index.ts",
+    "output": "./.w3bstream"
+  },
+  "studio:options": {
+    "dev": true,
+    "projectName": "DEV_PROJECT",
+    "payload": "{ \"message\": \"hello world\" }"
+  }
+}

@@ -13,7 +13,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "assemblyscript": "^0.22.0",
     "assemblyscript-json": "^1.1.0"
   },
   "type": "module",
@@ -24,6 +23,6 @@
     }
   },
   "devDependencies": {
-    "assemblyscript": "^0.22.0"
+    "@w3bstream/wasm-sdk": "^0.6.1"
   }
 }
