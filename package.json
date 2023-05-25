@@ -23,6 +23,6 @@
     }
   },
   "devDependencies": {
-    "@w3bstream/wasm-sdk": "^0.6.1"
+    "@w3bstream/wasm-sdk": "latest"
   }
 }

@@ -1,33 +1,42 @@
 lockfileVersion: 5.4
 
 specifiers:
-  assemblyscript: ^0.22.0
+  '@w3bstream/wasm-sdk': latest
   assemblyscript-json: ^1.1.0
 
 dependencies:
-  assemblyscript: 0.22.0
   assemblyscript-json: 1.1.0
+
+devDependencies:
+  '@w3bstream/wasm-sdk': 0.6.6
 
 packages:
 
+  /@w3bstream/wasm-sdk/0.6.6:
+    resolution: {integrity: sha512-ql9PCko6YwRxGigk09P++ZQTaWDKablmHjnb3+YHh+EYWYiIKCMl+v3hLi0CCKlkZHTtSw6mHjlMdrDt1nRAPw==}
+    engines: {node: '>=16.0.0'}
+    dependencies:
+      assemblyscript: 0.26.7
+      assemblyscript-json: 1.1.0
+    dev: true
+
   /assemblyscript-json/1.1.0:
     resolution: {integrity: sha512-UbE8ts8csTWQgd5TnSPN7MRV9NveuHv1bVnKmDLoo/tzjqxkmsZb3lu59Uk8H7SGoqdkDSEE049alx/nHnSdFw==}
-    dev: false
 
-  /assemblyscript/0.22.0:
-    resolution: {integrity: sha512-BC4tV2hc+oNgKOWfXXrl5iD2W+NkQV1MbRNCMi7YE83VoSzrmJj7LqSJMHYc39nKNnX+MiL4DHzp9zCKIMal/g==}
+  /assemblyscript/0.26.7:
+    resolution: {integrity: sha512-+zjr7RZotrNleOc2raZQJVIoMQ906LmZP9Q9C9IUft3o5QIzerQdKboHIwyO4HZUZor3dG0e9vIFK7w1l0PCsw==}
     engines: {node: '>=16.0.0', npm: '>=7.0.0'}
     hasBin: true
     dependencies:
-      binaryen: 110.0.0-nightly.20221019
+      binaryen: 111.0.0-nightly.20230111
       long: 5.2.1
-    dev: false
+    dev: true
 
-  /binaryen/110.0.0-nightly.20221019:
-    resolution: {integrity: sha512-BmuVpV5hpeU1G9ENWQUslwaxbmol810S3+yd7xVJap+vrSQz7ybXiirwya1FfYSFtuDbfGYPfQAObiW5O2PS1w==}
+  /binaryen/111.0.0-nightly.20230111:
+    resolution: {integrity: sha512-CUEED/yMHoGeGnOZhQJW5+Luf5z/F58PHK5lw2feh5fbbqauodgnxyYkc2oxSjYwHHRCmFmaYyeQH4zlhRbebg==}
     hasBin: true
-    dev: false
+    dev: true
 
   /long/5.2.1:
     resolution: {integrity: sha512-GKSNGeNAtw8IryjjkhZxuKB3JzlcLTwjtiQCHKvqQet81I93kXslhDQruGI/QsddO83mcDToBVy7GqGS/zYf/A==}
-    dev: false
+    dev: true
